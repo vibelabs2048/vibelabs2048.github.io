@@ -20,6 +20,11 @@ const statusEl = document.getElementById("status");
 const overlayEl = document.getElementById("overlay");
 const overlayTextEl = document.getElementById("overlay-text");
 const themeToggleEl = document.getElementById("theme-toggle");
+const modalEl = document.getElementById("game-modal");
+const openGameEl = document.getElementById("open-game");
+const closeGameEl = document.getElementById("close-game");
+const newGameEl = document.getElementById("new-game");
+const overlayButtonEl = document.getElementById("overlay-button");
 
 function applyTheme(theme) {
   const resolved = theme === "light" ? "light" : "dark";
@@ -83,6 +88,16 @@ function showOverlay(message, buttonText) {
 
 function hideOverlay() {
   overlayEl.classList.add("hidden");
+}
+
+function openModal() {
+  modalEl.classList.remove("hidden");
+  document.body.classList.add("modal-open");
+}
+
+function closeModal() {
+  modalEl.classList.add("hidden");
+  document.body.classList.remove("modal-open");
 }
 
 function resetGame() {
@@ -236,6 +251,15 @@ function keyToDirection(key) {
 }
 
 document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape" && !modalEl.classList.contains("hidden")) {
+    closeModal();
+    return;
+  }
+
+  if (modalEl.classList.contains("hidden")) {
+    return;
+  }
+
   const direction = keyToDirection(event.key);
   if (!direction) {
     return;
@@ -269,13 +293,22 @@ boardEl.addEventListener("touchend", (event) => {
   }
 }, { passive: true });
 
-document.getElementById("new-game").addEventListener("click", resetGame);
-document.getElementById("overlay-button").addEventListener("click", () => {
+newGameEl.addEventListener("click", resetGame);
+overlayButtonEl.addEventListener("click", () => {
   hideOverlay();
   if (state.over) {
     resetGame();
   } else {
     statusEl.textContent = "continuing past 2048.";
+  }
+});
+
+openGameEl.addEventListener("click", openModal);
+closeGameEl.addEventListener("click", closeModal);
+
+modalEl.addEventListener("click", (event) => {
+  if (event.target === modalEl) {
+    closeModal();
   }
 });
 
