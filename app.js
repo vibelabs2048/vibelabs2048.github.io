@@ -4,10 +4,26 @@ const STORAGE_KEYS = {
   theme: "vibelabs2048-theme",
 };
 
+function storageGet(key, fallback = null) {
+  try {
+    return localStorage.getItem(key) ?? fallback;
+  } catch {
+    return fallback;
+  }
+}
+
+function storageSet(key, value) {
+  try {
+    localStorage.setItem(key, value);
+  } catch {
+    return;
+  }
+}
+
 const state = {
   board: Array.from({ length: BOARD_SIZE }, () => Array(BOARD_SIZE).fill(0)),
   score: 0,
-  best: Number(localStorage.getItem(STORAGE_KEYS.best) || 0),
+  best: Number(storageGet(STORAGE_KEYS.best, 0) || 0),
   won: false,
   over: false,
   touchStart: null,
@@ -30,7 +46,7 @@ function applyTheme(theme) {
   const resolved = theme === "light" ? "light" : "dark";
   document.body.classList.toggle("light", resolved === "light");
   themeToggleEl.textContent = `mode: ${resolved}`;
-  localStorage.setItem(STORAGE_KEYS.theme, resolved);
+  storageSet(STORAGE_KEYS.theme, resolved);
 }
 
 function randomEmptyCell() {
@@ -60,7 +76,7 @@ function addRandomTile() {
 function updateBest() {
   if (state.score > state.best) {
     state.best = state.score;
-    localStorage.setItem(STORAGE_KEYS.best, String(state.best));
+    storageSet(STORAGE_KEYS.best, String(state.best));
   }
 }
 
@@ -91,12 +107,16 @@ function hideOverlay() {
 }
 
 function openModal() {
+  modalEl.hidden = false;
   modalEl.classList.remove("hidden");
+  modalEl.setAttribute("aria-hidden", "false");
   document.body.classList.add("modal-open");
 }
 
 function closeModal() {
   modalEl.classList.add("hidden");
+  modalEl.setAttribute("aria-hidden", "true");
+  modalEl.hidden = true;
   document.body.classList.remove("modal-open");
 }
 
@@ -306,6 +326,19 @@ overlayButtonEl.addEventListener("click", () => {
 openGameEl.addEventListener("click", openModal);
 closeGameEl.addEventListener("click", closeModal);
 
+document.addEventListener("click", (event) => {
+  const target = event.target;
+  if (!(target instanceof Element)) {
+    return;
+  }
+  if (target.closest("#open-game")) {
+    openModal();
+  }
+  if (target.closest("#close-game")) {
+    closeModal();
+  }
+});
+
 modalEl.addEventListener("click", (event) => {
   if (event.target === modalEl) {
     closeModal();
@@ -316,6 +349,6 @@ themeToggleEl.addEventListener("click", () => {
   applyTheme(document.body.classList.contains("light") ? "dark" : "light");
 });
 
-applyTheme(localStorage.getItem(STORAGE_KEYS.theme) || "dark");
+applyTheme(storageGet(STORAGE_KEYS.theme, "dark") || "dark");
 resetGame();
 renderBoard();
