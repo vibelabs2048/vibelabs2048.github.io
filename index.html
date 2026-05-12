@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>vibelabs2048</title>
+  <meta name="description" content="vibelabs2048 home page with a 2048 game and published project links.">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="shell">
+    <header class="shell-header">
+      <div>
+        <p class="prompt">$ whoami</p>
+        <h1>vibelabs2048</h1>
+        <p class="tagline">vibe coding lab</p>
+      </div>
+      <button id="theme-toggle" class="button" type="button" aria-label="Toggle color mode">
+        mode: dark
+      </button>
+    </header>
+
+    <section class="panel">
+      <p class="prompt">$ pwd</p>
+      <p>/home/vibelabs2048/public_html</p>
+      <p class="prompt">$ ls published</p>
+      <ul class="link-list">
+        <li>
+          <a href="https://vibelabs2048.github.io/treegen/" target="_blank" rel="noreferrer">treegen/</a>
+        </li>
+      </ul>
+    </section>
+
+    <section class="panel">
+      <div class="panel-head">
+        <div>
+          <p class="prompt">$ ./2048</p>
+          <p class="subtle">arrow keys / hjkl / swipe</p>
+        </div>
+        <div class="scoreboard">
+          <div class="stat">
+            <span class="stat-label">score</span>
+            <strong id="score">0</strong>
+          </div>
+          <div class="stat">
+            <span class="stat-label">best</span>
+            <strong id="best-score">0</strong>
+          </div>
+          <button id="new-game" class="button" type="button">new game</button>
+        </div>
+      </div>
+
+      <div class="game-wrap">
+        <div id="board" class="board" aria-label="2048 board"></div>
+        <div id="overlay" class="overlay hidden" aria-live="polite">
+          <p id="overlay-text"></p>
+          <button id="overlay-button" class="button" type="button">restart</button>
+        </div>
+      </div>
+
+      <p id="status" class="status" aria-live="polite">merge tiles. reach 2048 or keep going.</p>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

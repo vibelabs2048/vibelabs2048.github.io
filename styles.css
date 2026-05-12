@@ -1,0 +1,227 @@
+:root {
+  color-scheme: dark;
+  --bg: #0b0f0c;
+  --panel: #101611;
+  --panel-2: #151d17;
+  --text: #d6f5da;
+  --muted: #7fa185;
+  --border: #35523b;
+  --accent: #8cff72;
+  --shadow: rgba(0, 0, 0, 0.35);
+  --tile-empty: #1b251d;
+}
+
+body.light {
+  color-scheme: light;
+  --bg: #edf2ea;
+  --panel: #f8fbf6;
+  --panel-2: #e3ece0;
+  --text: #132016;
+  --muted: #4b5e4e;
+  --border: #91aa95;
+  --accent: #245f2d;
+  --shadow: rgba(19, 32, 22, 0.12);
+  --tile-empty: #d7e1d4;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at top, rgba(140, 255, 114, 0.1), transparent 30%),
+    var(--bg);
+  color: var(--text);
+  font-family: Consolas, "Lucida Console", Monaco, monospace;
+}
+
+a {
+  color: var(--accent);
+}
+
+button {
+  font: inherit;
+}
+
+.shell {
+  width: min(980px, calc(100% - 2rem));
+  margin: 0 auto;
+  padding: 2rem 0 3rem;
+}
+
+.shell-header,
+.panel,
+.board,
+.stat,
+.button,
+.overlay {
+  border: 1px solid var(--border);
+  box-shadow: 0 10px 30px var(--shadow);
+}
+
+.shell-header,
+.panel {
+  background: linear-gradient(180deg, var(--panel), var(--panel-2));
+}
+
+.shell-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: flex-start;
+  padding: 1rem 1.25rem;
+}
+
+h1,
+p,
+ul {
+  margin: 0;
+}
+
+h1 {
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  line-height: 1.1;
+  margin-top: 0.25rem;
+}
+
+.tagline,
+.subtle,
+.status,
+.stat-label {
+  color: var(--muted);
+}
+
+.prompt {
+  color: var(--accent);
+}
+
+.panel {
+  margin-top: 1rem;
+  padding: 1rem 1.25rem 1.25rem;
+}
+
+.link-list {
+  margin-top: 0.5rem;
+  padding-left: 1.15rem;
+}
+
+.panel-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+.scoreboard {
+  display: flex;
+  gap: 0.75rem;
+  align-items: stretch;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.stat,
+.button {
+  background: var(--panel);
+}
+
+.stat {
+  min-width: 88px;
+  padding: 0.55rem 0.7rem;
+  text-align: center;
+}
+
+.stat strong {
+  display: block;
+  font-size: 1.2rem;
+}
+
+.button {
+  cursor: pointer;
+  color: var(--text);
+  padding: 0.7rem 0.95rem;
+}
+
+.button:hover,
+.button:focus-visible {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.game-wrap {
+  position: relative;
+  margin-top: 1rem;
+}
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.65rem;
+  padding: 0.65rem;
+  background: var(--panel);
+}
+
+.tile {
+  aspect-ratio: 1 / 1;
+  display: grid;
+  place-items: center;
+  background: var(--tile-empty);
+  border: 1px solid var(--border);
+  font-size: clamp(1.25rem, 4vw, 2rem);
+  font-weight: 700;
+  transition: transform 120ms ease, background 120ms ease, color 120ms ease;
+}
+
+.tile[data-value="0"] {
+  color: transparent;
+}
+
+.tile[data-value="2"] { background: #203123; color: var(--text); }
+.tile[data-value="4"] { background: #27402b; color: var(--text); }
+.tile[data-value="8"] { background: #305535; color: #f4fff1; }
+.tile[data-value="16"] { background: #3b6c40; color: #f4fff1; }
+.tile[data-value="32"] { background: #4e8d4f; color: #081108; }
+.tile[data-value="64"] { background: #63b35f; color: #081108; }
+.tile[data-value="128"] { background: #8cff72; color: #081108; }
+.tile[data-value="256"] { background: #b6ff9f; color: #081108; }
+.tile[data-value="512"] { background: #d5ffc7; color: #081108; }
+.tile[data-value="1024"] { background: #efffe8; color: #081108; font-size: clamp(1rem, 3vw, 1.6rem); }
+.tile[data-value="2048"] { background: #fff7b3; color: #081108; font-size: clamp(1rem, 3vw, 1.6rem); }
+.tile[data-value="4096"] { background: #ffd68b; color: #081108; font-size: clamp(1rem, 3vw, 1.6rem); }
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  gap: 0.75rem;
+  padding: 1rem;
+  text-align: center;
+  background: rgba(11, 15, 12, 0.82);
+}
+
+body.light .overlay {
+  background: rgba(248, 251, 246, 0.88);
+}
+
+.hidden {
+  display: none;
+}
+
+.status {
+  margin-top: 0.85rem;
+}
+
+@media (max-width: 720px) {
+  .shell-header,
+  .panel-head {
+    flex-direction: column;
+  }
+
+  .scoreboard {
+    justify-content: flex-start;
+  }
+}
