@@ -80,6 +80,7 @@ button {
 }
 
 h1,
+h2,
 p,
 ul {
   margin: 0;
@@ -107,9 +108,50 @@ h1 {
   padding: 1rem 1.25rem 1.25rem;
 }
 
-.link-list {
-  margin-top: 0.5rem;
-  padding-left: 1.15rem;
+.section-title {
+  font-size: 1rem;
+  color: var(--text);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.project-list {
+  margin-top: 0.75rem;
+}
+
+.project-card {
+  border: 1px solid var(--border);
+  background: var(--panel);
+  box-shadow: 0 10px 30px var(--shadow);
+}
+
+.project-card summary {
+  cursor: pointer;
+  list-style: none;
+  padding: 0.9rem 1rem;
+  color: var(--accent);
+}
+
+.project-card summary::-webkit-details-marker {
+  display: none;
+}
+
+.project-card summary::after {
+  content: "[open]";
+  float: right;
+  color: var(--muted);
+}
+
+.project-card[open] summary::after {
+  content: "[close]";
+}
+
+.project-card p {
+  padding: 0 1rem 1rem;
+}
+
+.project-copy {
+  color: var(--muted);
 }
 
 .panel-head {
@@ -159,6 +201,8 @@ h1 {
 .game-wrap {
   position: relative;
   margin-top: 1rem;
+  display: flex;
+  justify-content: center;
 }
 
 .modal {
@@ -167,7 +211,7 @@ h1 {
   z-index: 20;
   display: grid;
   place-items: center;
-  padding: 1rem;
+  padding: 0.75rem;
   background: rgba(11, 15, 12, 0.82);
 }
 
@@ -176,13 +220,17 @@ body.light .modal {
 }
 
 .modal-panel {
-  width: min(94vw, 42rem);
-  max-height: 92vh;
-  overflow: auto;
+  width: min(96vw, 42rem);
+  max-width: 42rem;
+  height: min(94dvh, 52rem);
+  max-height: 94dvh;
+  overflow: hidden;
   padding: 1rem 1.25rem 1.25rem;
   border: 1px solid var(--border);
   box-shadow: 0 10px 30px var(--shadow);
   background: linear-gradient(180deg, var(--panel), var(--panel-2));
+  display: flex;
+  flex-direction: column;
 }
 
 .modal-head {
@@ -201,8 +249,8 @@ body.light .modal {
   gap: 0.65rem;
   padding: 0.65rem;
   background: var(--panel);
-  width: min(78vw, 78vh, 32rem);
-  max-width: 100%;
+  width: min(100%, calc(94dvh - 16rem), 32rem);
+  max-width: min(100%, 32rem);
   margin: 0 auto;
 }
 
@@ -269,12 +317,18 @@ body.light .overlay {
 
   .modal-panel {
     width: min(96vw, 32rem);
-    padding: 0.9rem;
+    height: min(100dvh - 1rem, 44rem);
+    max-height: calc(100dvh - 1rem);
+    padding: 0.85rem;
   }
 
   .board {
-    width: min(90vw, calc(100vh - 18rem));
+    width: min(100%, calc(100dvh - 18rem));
     gap: 0.5rem;
     padding: 0.5rem;
+  }
+
+  .tile {
+    font-size: clamp(1rem, 6vw, 1.6rem);
   }
 }

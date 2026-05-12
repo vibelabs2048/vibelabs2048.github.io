@@ -21,21 +21,25 @@
     </header>
 
     <section class="panel">
-      <p class="prompt">$ pwd</p>
-      <p>/home/vibelabs2048/public_html</p>
-      <p class="prompt">$ ls published</p>
-      <ul class="link-list">
-        <li>
-          <a href="https://vibelabs2048.github.io/treegen/" target="_blank" rel="noreferrer">treegen/</a>
-        </li>
-      </ul>
+      <h2 class="section-title">Projects</h2>
+      <div class="project-list">
+        <details class="project-card" open>
+          <summary>treegen</summary>
+          <p class="project-copy">Published project site.</p>
+          <p>
+            <a href="https://vibelabs2048.github.io/treegen/" target="_blank" rel="noreferrer">
+              vibelabs2048.github.io/treegen/
+            </a>
+          </p>
+        </details>
+      </div>
     </section>
 
     <section class="panel">
       <div class="panel-head">
         <div>
-          <p class="prompt">$ ls arcade</p>
-          <p class="subtle">launch the modal game client</p>
+          <h2 class="section-title">2048</h2>
+          <p class="subtle">Open the game in a responsive modal.</p>
         </div>
         <button id="open-game" class="button" type="button">./2048</button>
       </div>
